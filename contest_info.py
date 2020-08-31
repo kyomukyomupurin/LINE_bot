@@ -43,7 +43,10 @@ if __name__ == '__main__':
 
     headers = {'Authorization': 'Bearer ' + line_token}
 
+    payload = {'message': 'Comming contest'}
+    res = requests.post(line_url, headers=headers, params=payload)
+
     for contest in messages:
         payload = {'message': message}
         res = requests.post(line_url, headers=headers, params=payload)
-        time.sleep(3)
+        time.sleep(1)
