@@ -7,8 +7,8 @@ import time
 blog_url = 'https://codeforces.com/blog/entry/'
 blog_api_url = 'https://codeforces.com/api/blogEntry.view'
 line_url = 'https://notify-api.line.me/api/notify'
-max_post_day = 50
-
+max_post_day = 5
+last_id = ""
 
 def search_nextId():
     payload['blogEntryId'] = str(int(payload['blogEntryId']) + 1)
@@ -16,11 +16,10 @@ def search_nextId():
     time.sleep(0.5)
 
     if r_json['status'] == 'OK':
+        global last_id
         last_blogEntryId = payload['blogEntryId']
         blog_urls.append(blog_url + last_blogEntryId)
-
-        with open('./last_blogEntryId.txt', 'w') as f:
-            f.write(last_blogEntryId)
+        last_id = last_blogEntryId
 
 
 if __name__ == '__main__':
@@ -49,3 +48,6 @@ if __name__ == '__main__':
         blog_payload = {'message': url}
         res = requests.post(line_url, headers=headers, params=blog_payload)
         time.sleep(1)
+
+    with open('./last_blogEntryId.txt', 'w') as f:
+        f.write(last_id)
