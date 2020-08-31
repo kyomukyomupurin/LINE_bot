@@ -47,6 +47,6 @@ if __name__ == '__main__':
     res = requests.post(line_url, headers=headers, params=payload)
 
     for contest in messages:
-        payload = {'message': message}
+        payload = {'message': contest}
         res = requests.post(line_url, headers=headers, params=payload)
         time.sleep(1)
