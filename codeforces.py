@@ -1,18 +1,33 @@
 import requests
+import sys
 
 
-payload = {'handles': 'kyomukyomupurin'}
-r = requests.get('https://codeforces.com/api/user.info', params=payload)
-diff = r.json()['result'][0]['maxRating'] - r.json()['result'][0]['rating']
-message = "Hello! " + payload['handles'] + ". Your current rating is " + str(diff) + " less than highest."
+user_info_url = 'https://codeforces.com/api/user.info'
+line_url = "https://notify-api.line.me/api/notify"
 
-secret_token = ""
 
-with open('./token.txt', 'r') as f:
-    secret_token = f.read()
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("Enter a user name!")
+        exit(0)
 
-url = "https://notify-api.line.me/api/notify"
-token = secret_token
-headers = {"Authorization": "Bearer " + token}
-payload = {"message": message}
-res = requests.post(url, headers=headers, params=payload)
+    user_name = sys.argv[1]
+    payload = {'handles': user_name}
+    result = requests.get(user_info_url, params=payload).json()
+
+    if result['status'] == 'FAILED':
+        print("User " + user_name + " not found.")
+    else:
+        diff = result['result'][0]['maxRating'] - result['result'][0]['rating']
+
+    message = "Hello, " + user_name + ". Your current rating is " + str(result['result'][0]['rating']) \
+        + ", " + str(diff) + " lower than highest."
+
+    secret_token = ""
+
+    with open('./token.txt', 'r') as f:
+        secret_token = f.read()
+
+    headers = {"Authorization": "Bearer " + secret_token}
+    line_payload = {"message": message}
+    response = requests.post(line_url, headers=headers, params=line_payload)
