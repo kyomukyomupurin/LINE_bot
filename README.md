@@ -4,7 +4,7 @@ LINE notify で Codeforces の API を叩いた結果を通知してくれる bo
 
 ## ```codeforces.py```
 
-レーティングが Highest からどれだけ下がったか教えてくれる。
+レーティングが Highest からどれだけ下がったか教えてくれる。```python3 codeforces.py user_name``` のように実行する。
 
 ## ```contest_info.py```
 
