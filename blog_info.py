@@ -7,7 +7,7 @@ import time
 blog_url = 'https://codeforces.com/blog/entry/'
 blog_api_url = 'https://codeforces.com/api/blogEntry.view'
 line_url = 'https://notify-api.line.me/api/notify'
-max_post_day = 5
+max_post_day = 50
 last_id = ""
 
 def search_nextId():
