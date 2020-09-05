@@ -23,10 +23,7 @@ if __name__ == '__main__':
     message = "Hello, " + user_name + ". Your current rating is " + str(result['result'][0]['rating']) \
         + ", " + str(diff) + " lower than highest."
 
-    secret_token = ""
-
-    with open('./token.txt', 'r') as f:
-        secret_token = f.read()
+    secret_token = open('./token.txt', 'r').read()
 
     headers = {"Authorization": "Bearer " + secret_token}
     line_payload = {"message": message}

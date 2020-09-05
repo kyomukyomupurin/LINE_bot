@@ -36,10 +36,7 @@ if __name__ == '__main__':
 
     messages.reverse()
 
-    line_token = ''
-
-    with open('./token.txt', 'r') as f:
-        line_token = f.read()
+    line_token = open('./token.txt', 'r').read()
 
     headers = {'Authorization': 'Bearer ' + line_token}
 
