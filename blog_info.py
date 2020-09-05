@@ -10,12 +10,13 @@ line_url = 'https://notify-api.line.me/api/notify'
 max_post_day = 50
 last_id = ""
 
+
 def search_nextId():
     payload['blogEntryId'] = str(int(payload['blogEntryId']) + 1)
     r_json = requests.get(blog_api_url, params=payload).json()
-    time.sleep(0.5)
+    time.sleep(0.3)
 
-    if r_json['status'] == 'OK':
+    if r_json['status'] == 'OK' and r_json['result']['rating'] > 0:
         global last_id
         last_blogEntryId = payload['blogEntryId']
         blog_urls.append(blog_url + last_blogEntryId)
@@ -23,22 +24,16 @@ def search_nextId():
 
 
 if __name__ == '__main__':
-    last_blogEntryId = ""
+    last_blogEntryId = open('./last_blogEntryId.txt', 'r').read()
 
-    with open('./last_blogEntryId.txt', 'r') as f:
-        last_blogEntryId = f.read()
-
-    payload = {'blogEntryId' : last_blogEntryId}
+    payload = {'blogEntryId': last_blogEntryId}
 
     blog_urls = []
 
     for i in range(max_post_day):
         search_nextId()
 
-    line_token = ''
-
-    with open('./token.txt', 'r') as f:
-        line_token = f.read()
+    line_token = open('./token.txt', 'r').read()
 
     headers = {'Authorization': 'Bearer ' + line_token}
     payload = {'message': 'New blog posts'}
