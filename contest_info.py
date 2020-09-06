@@ -6,7 +6,7 @@ import time
 
 contest_url = 'https://codeforces.com/api/contest.list'
 line_url = 'https://notify-api.line.me/api/notify'
-num_future_contest = 10
+num_future_contest = 20
 
 
 def convert_time(timestamp : int) -> str:
