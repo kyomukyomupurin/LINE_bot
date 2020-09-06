@@ -1,17 +1,18 @@
 import requests
 import sys
+import argparse
 
 
 user_info_url = 'https://codeforces.com/api/user.info'
 line_url = "https://notify-api.line.me/api/notify"
 
+parser = argparse.ArgumentParser()
+parser.add_argument('user_name', help='user name you want to know about')
+args = parser.parse_args()
+
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Enter a user name!")
-        exit(0)
-
-    user_name = sys.argv[1]
+    user_name = args.user_name
     payload = {'handles': user_name}
     result = requests.get(user_info_url, params=payload).json()
 
